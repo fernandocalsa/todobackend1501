@@ -103,29 +103,102 @@ Student.create([
 ### Iteración #4
 Obtener la lista de alumnos
 
+```js
+Student.find({ age: { $gt: 10 } })
+  .then(studentDocs => console.log('Found this: ', studentDocs))
+  .catch(err => console.log('Error while getting the students: ', err));
+```
+
 ### Iteración #5
 Obtener la lista de alumnos filtrado por nacidos después de 1980
 
+```js
+Student.find({ age: { $gt: 1980 } })
+  .then(studentDocs => console.log('Found this 🐈: ', studentDocs))
+  .catch(err => console.log('Error while getting the students: ', err));
+```
+
 ### Iteración #6
 Obtener un alumno por Id
+```js
+Student.findById('123456789abcdef')
+  .then(studentDoc => console.log('Found this student by their ID: ', studentDoc))
+  .catch(err => console.log('Error while getting the students: ', err));
+```
 
 ### Iteración #7
 Contar documentos
+```js
+Student.countDocuments({ first_name: 'Pepe' })
+  .then(total =>
+    console.log('Total number of students with name Pepe: ', total)
+  )
+  .catch(err => console.log('Error while counting the students: ', err));
+```
 
 ### Iteración #8
 Modificar un documento a partir de su Id
+```js
+Student.findByIdAndUpdate(
+  '123456789abcdef',
+  {
+    $set: { first_name: 'Pablo', birthyear: 1986 }
+  },
+  { 
+    new: true  //You should set the new option to true to return the document after update was applied.
+  }
+)
+  .then(updatedStudent => console.log('Updated student: ', updatedStudent))
+  .catch(err => console.log('Error while updating the student: ', err));
+```
 
 ### Iteración #9
 Modificar varios documentos a partir de su nombre
 
+```js
+// Update all students named Pepe
+Student.updateMany({ first_name: 'Pepe' }, { $inc: { birthyear: 1 } }) // birthyear = birthyear + 1
+  .then(updatedStudents => console.log('Updated students: ', updatedStudents))
+  .catch(err => console.log('Error while updating students: ', err));
+```
+
 ### Iteración #10
 Buscar un documento para modificar, si no lo encuentra, insertar uno nuevo
+Modificar un documento a partir de su Id
+```js
+const filter = { first_name: 'Pepe' };
+const update = { first_name: 'Anna', last_name: 'Martínez', birthday: 2001 };
+
+Student.findOneAndUpdate(
+  filter,
+  update,
+  { 
+    new: true  //You should set the new option to true to return the document after update was applied.
+    upsert: true // Make this update into an upsert. If no document matches filter, MongoDB will insert one by combining filter and update as shown below.
+  }
+)
+  .then(updatedStudents => console.log('Updated students: ', updatedStudents))
+  .catch(err => console.log('Error while updating the students: ', err));
+```
 
 ### Iteración #11
 Eliminar un documento a partir de su Id
+```js
+Student.findByIdAndDelete('123456789abcdef') // .findByIdAndRemove() works the same as .findByIdAndDelete()
+  .then(deletedStudent => console.log(`Deleted student with id: ${deletedStudent._id}`))
+  .catch(err => console.log('Error while deleting one student: ', err));
+```
 
 ### Iteración #12
 Eliminar varios documentos a partir de su nombre
+```js
+Student.deleteMany({ name: 'Pepe' })
+  .then(deletedStudents => {
+    console.log('deleted: ', deletedStudents);
+    // deletedStudents.forEach(oneStudent =>  console.log(`Deleted student with id: ${oneStudent._id}`));
+  })
+  .catch(err => console.log('Error while deleting one student: ', err));
+```
 
 ### Iteración #13
 Definir validación de datos en el modelo
