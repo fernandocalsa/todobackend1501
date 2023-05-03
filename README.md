@@ -148,6 +148,8 @@ mongoose.connection.close()
 
 <details>
   <summary>Estoy atascado y no sé cómo resolver el problema o por dónde empezar. ¿Qué tengo que hacer?</summary>
+
+<br>
   
 Si te encuentras atascado en el código y no sabse cómo resolver el problema o por dónde empezar, debes dar un paso atrás e intentar formular una pregunta clara sobre el problema específico al que se enfrenta. Esto te ayudará a reducir el problema y encontrar posibles soluciones.
 
@@ -161,6 +163,8 @@ Una vez que tengas una comprensión clara del problema, podrás comenzar a traba
 
 <details>
     <summary>¿Cómo utilizar <code>then()</code> y <code>catch()</code> with Promises?</summary>
+
+<br>
 
 Cuando trabajes con Promesas o una *función que devuelve una promesa*, puedes adjuntar el método `.then()` para manejar el valor resuelto y un método `catch()` para manejar el posible valor de rechazo.
 
@@ -213,6 +217,8 @@ El primer `then()` devuelve otra promesa con otra llamada a `someAPI.getData()`,
 
 <details>
   <summary>¿Cómo utilizar una función con <code>async</code> y <code>await</code>?</summary>
+
+<br>
 
 Una función asincrónica se crea utilizando la palabra clave `async` antes de la definición de la función.
 
@@ -311,6 +317,8 @@ Ten en cuenta que necesitábamos otra función contenedora `async` para poder us
 <details>
   <summary>¿Cómo utilizar un bloque <code>try</code> / <code>catch</code>?</summary>
 
+<br>
+
 El bloque `try`/`catch` se usa para manejar los errores que ocurren durante la ejecución de un programa.
 
 El bloque `try` contiene el código que podría arrojar un error, y el bloque `catch` contiene el código que manejará el error.
@@ -353,6 +361,8 @@ En el ejemplo anterior, el bloque `try` contiene una operación asíncrona que p
 <details>
   <summary>Recibí el error: "Cannot find module" Node.js". ¿Cómo puedo resolverlo?</summary>
 
+<br>
+
 El error "Cannot find module" en una aplicación de Node.js significa que el módulo que intenta importar o usar no existe en su proyecto o Node.js no puede encontrarlo.
 
 Hay algunas cosas que puedes intentar para resolver el problema:
@@ -373,6 +383,8 @@ Esto agregará el paquete a la lista de dependencias en el archivo `package.json
 
 <details>
   <summary>Recibí el error "Error: listen EADDRINUSE: Address already in use". ¿Cómo lo soluciono?</summary>
+
+<br>
 
 Este error significa que el puerto lo toma otro proceso que todavía se está ejecutando en ese puerto.
 Para solucionar el problema, debe eliminar el proceso usando el puerto y luego ejecutar el comando nuevamente. Aquí está cómo hacerlo:
@@ -427,6 +439,8 @@ taskkill /PID 12345 /f
 <details>
   <summary>Recibí el error "Port is already in use". ¿Cómo lo soluciono?</summary>
 
+<br>
+
 Este error significa que el puerto lo toma otro proceso que todavía se está ejecutando en ese puerto.
 Para solucionar el problema, debes eliminar el proceso usando el puerto y luego ejecutar el comando nuevamente. Aquí te explicamos cómo hacerlo:
 
@@ -479,6 +493,8 @@ taskkill /PID 12345 /f
 
 <details>
   <summary>Recibí el error: "Error: connect ECONNREFUSED ::1:27017". ¿Qué tengo que hacer?</summary>
+
+<br>
 
 Este error significa que la aplicación Node.js no puede conectarse a una instancia de MongoDB que se ejecuta en la (misma) máquina local.
 Hay algunas cosas que debes tener en cuenta para solucionar este problema:
@@ -538,6 +554,8 @@ Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
     <details style="font-size: 14px; cursor: pointer; outline: none;">
     <summary> Check the image inside </summary>
 
+<br>
+
     ![](https://education-team-2020.s3.eu-west-1.amazonaws.com/web-dev/prework/installations/win-installations-bootcamp-mongo-03.png)
 
     </details>
@@ -549,6 +567,8 @@ Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
 <details>
   <summary>¿Por qué mi base de datos está vacía aunque puedo conectarme?</summary>
 
+<br>
+
 Es normal que la base de datos esté vacía si no ha insertado ningún dato en ella. Si desea confirmar que su conexión a la base de datos funciona correctamente, puede intentar insertar un documento simple en una colección y luego consultar la colección o verificar la base de datos para ver si se agregó el documento.
 
 [Volver arriba](#faqs)
@@ -557,6 +577,8 @@ Es normal que la base de datos esté vacía si no ha insertado ningún dato en e
 
 <details>
   <summary>Recibo el error "MongoDB no se está ejecutando en el host y el puerto proporcionados" cuando intento conectarme con MongoDB Compass. ¿Qué tengo que hacer?</summary>
+
+<br>
 
 Si estás intentando conectarse a una instancia de MongoDB que se ejecuta localmente, primero debes verificar que MongoDB se esté ejecutando en su máquina. Si no se está ejecutando, reinicia el servicio de acuerdo con las siguientes instrucciones:
 
@@ -608,6 +630,8 @@ Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
     <details style="font-size: 14px; cursor: pointer; outline: none;">
     <summary> Check the image inside </summary>
 
+<br>
+
     ![](https://education-team-2020.s3.eu-west-1.amazonaws.com/web-dev/prework/installations/win-installations-bootcamp-mongo-03.png)
 
     </details>
@@ -618,6 +642,7 @@ Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
 
 <details>
 <summary>¿Cómo crear un modelo de Mongoose?</summary>
+<br>
 
 El modelo Mongoose sirve como modelo para crear y administrar documentos dentro de las colecciones de MongoDB. El modelo de Mongoose es una superposición sobre una colección de MongoDB, que usamos para consultar e interactuar con esa colección de base de datos.
 
@@ -657,6 +682,8 @@ Mongoose automáticamente pluraliza y convierte a minúsculas el nombre del mode
 <details>
   <summary>¿Cómo resuelvo el error de Mongoose "ValidationError: Path ... is required."?</summary>
 
+<br>
+
 Este error ocurre cuando intenta guardar un documento en la base de datos sin un valor para un campo que está marcado como obligatorio en el modelo.
 
 Para corregir este error, asegúrate de proporcionar un valor para todos los campos obligatorios al crear o actualizar un documento. Puedes verificar que está proporcionando los valores correctos utilizando console.log para inspeccionar los datos antes de guardarlos en la base de datos.
@@ -667,6 +694,8 @@ Para corregir este error, asegúrate de proporcionar un valor para todos los cam
 
 <details>
   <summary>Recibo un error: "not defined". ¿Cómo lo soluciono?</summary>
+
+<br>
 
 
 El error "ReferenceError: la variable no está definida" en JavaScript ocurre cuando intenta acceder a una variable o una función que aún no se ha definido o está fuera del alcance.
@@ -679,6 +708,8 @@ En caso de que la variable o una función esté definida en otro archivo, asegú
 
 <details>
   <summary>Cuando intento ejecutar la aplicación, aparece el error "command not found: nodemon"</summary>
+
+<br>
 
 Asegúrate de tener `nodemon` instalado globalmente:
 
@@ -695,6 +726,8 @@ Esto instalará nodemon globalmente en su sistema, haciéndolo disponible para t
 
 <details>
   <summary>No puedo hacer push al repositorio. ¿Qué tengo que hacer?</summary>
+
+<br>
 
 Hay un par de razones posibles por las que es posible que no puedas hacer *push* a un repositorio de Git:
 
