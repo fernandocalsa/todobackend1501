@@ -54,16 +54,7 @@ Crear un modelo en `models` para alumnos en un fichero `student.model.js`. Este 
 | last_name   | String      |
 | birthyear   | Number      |
 
-### Iteración #2
-Insertar vuestros datos (o inventados) en nuestra base de datos
-
-```js
-Student.create({ first_name: 'Pepe', last_name: 'López', birthyear: 1978 })
-  .then(studentDoc => console.log(`Student create worked well: ${studentDoc}`))
-  .catch(error =>
-    console.log(`Creating a new student went wrong! Try again 😞 ${err}`)
-  );
-```
+`models\student.model.js`
 
 ```js
 const mongoose = require('mongoose');
@@ -84,6 +75,17 @@ const studentSchema = new Schema({
 // all students in students collection will share these properties
 // Mongoose turns models name to a collection name (Student --> students)
 module.exports = mongoose.module("Student", catSchema);
+```
+
+### Iteración #2
+Insertar vuestros datos (o inventados) en nuestra base de datos
+
+```js
+Student.create({ first_name: 'Pepe', last_name: 'López', birthyear: 1978 })
+  .then(studentDoc => console.log(`Student create worked well: ${studentDoc}`))
+  .catch(error =>
+    console.log(`Creating a new student went wrong! Try again 😞 ${err}`)
+  );
 ```
 
 ### Iteración #3
