@@ -23,7 +23,7 @@ DB_NAME="db"
 require('dotenv').config();
 ```
 
-## Preparar conexión con MongoDB
+## Preparar conexión con MongoDB Atlas
 `app.js`
 ```js
 const mongoose = require("mongoose");
