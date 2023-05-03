@@ -148,665 +148,573 @@ mongoose.connection.close()
 
 <details>
   <summary>Estoy atascado y no sé cómo resolver el problema o por dónde empezar. ¿Qué tengo que hacer?</summary>
-
-  <br>
   
-    Si te encuentras atascado en el código y no sabse cómo resolver el problema o por dónde empezar, debes dar un paso atrás e intentar formular una pregunta clara sobre el problema específico al que se enfrenta. Esto te ayudará a reducir el problema y encontrar posibles soluciones.
+Si te encuentras atascado en el código y no sabse cómo resolver el problema o por dónde empezar, debes dar un paso atrás e intentar formular una pregunta clara sobre el problema específico al que se enfrenta. Esto te ayudará a reducir el problema y encontrar posibles soluciones.
 
-    Por ejemplo, ¿es un concepto que no comprendes o recibe un mensaje de error que no sabes cómo solucionar? Por lo general, es útil tratar de exponer el problema lo más claramente posible, incluidos los mensajes de error que estés recibiendo. Esto puede ayudarte a comunicar el problema a otros y potencialmente obtener ayuda de compañeros de clase o recursos en línea.
-    
-    Una vez que tengas una comprensión clara del problema, podrás comenzar a trabajar hacia la solución.
+Por ejemplo, ¿es un concepto que no comprendes o recibe un mensaje de error que no sabes cómo solucionar? Por lo general, es útil tratar de exponer el problema lo más claramente posible, incluidos los mensajes de error que estés recibiendo. Esto puede ayudarte a comunicar el problema a otros y potencialmente obtener ayuda de compañeros de clase o recursos en línea.
 
-  <br>
+Una vez que tengas una comprensión clara del problema, podrás comenzar a trabajar hacia la solución.
 
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
     <summary>¿Cómo utilizar <code>then()</code> y <code>catch()</code> with Promises?</summary>
 
-    <br>
+Cuando trabajes con Promesas o una *función que devuelve una promesa*, puedes adjuntar el método `.then()` para manejar el valor resuelto y un método `catch()` para manejar el posible valor de rechazo.
 
-    Cuando trabajes con Promesas o una *función que devuelve una promesa*, puedes adjuntar el método `.then()` para manejar el valor resuelto y un método `catch()` para manejar el posible valor de rechazo.
+Aquí hay un ejemplo de cómo usar `.then()` y `.catch()` para manejar una promesa simple:
 
-    Aquí hay un ejemplo de cómo usar `.then()` y `.catch()` para manejar una promesa simple:
+```js
+myPromise
+    .then((result) => {
+    console.log(result);
+    })
+    .catch((error) => {
+    console.log(error);
+    })
+```
 
-    ```js
-    myPromise
-        .then((result) => {
-        console.log(result);
-        })
-        .catch((error) => {
-        console.log(error);
-        })
-    ```
+Aquí hay un ejemplo del uso de `.then()` y `.catch()` para manejar una promesa devuelta por una función/método:
 
-    Aquí hay un ejemplo del uso de `.then()` y `.catch()` para manejar una promesa devuelta por una función/método:
+```js
+someAPI.getData()
+    .then((result) => {
+    console.log(result);
+    })
+    .catch((error) => {
+    console.log(error);
+    })
+```
 
-    ```js
-    someAPI.getData()
-        .then((result) => {
-        console.log(result);
-        })
-        .catch((error) => {
-        console.log(error);
-        })
-    ```
+Si estás intentando ejecutar varias promesas en una secuencia, puedes hacerlo devolviendo una promesa desde un bloque `.then()`. Ejemplo:
 
-  <br>
+```js
+someAPI.getData()
+    .then((result1) => {
+        console.log(result1
+        return someAPI.getData( // Return another pending promise
+    .then((result2) => { // Handle the returned promise
+        console.log(result2
+    })
+    .catch((error) => {
+        console.log(error
+    })
+```
 
-    Si estás intentando ejecutar varias promesas en una secuencia, puedes hacerlo devolviendo una promesa desde un bloque `.then()`. Ejemplo:
+La primera línea `someAPI.getData()` inicia una operación asíncrona, que devuelve una promesa. Luego se llama al método `.then()` con la promesa de manejar el valor resuelto.
 
-    ```js
-    someAPI.getData()
-        .then((result1) => {
-            console.log(result1
-            return someAPI.getData( // Return another pending promise
-        .then((result2) => { // Handle the returned promise
-            console.log(result2
-        })
-        .catch((error) => {
-            console.log(error
-        })
-    ```
+El primer `then()` devuelve otra promesa con otra llamada a `someAPI.getData()`, que permite encadenar otra función `then()` que maneja el segundo valor resuelto, registrándolo en la consola.
 
-    La primera línea `someAPI.getData()` inicia una operación asíncrona, que devuelve una promesa. Luego se llama al método `.then()` con la promesa de manejar el valor resuelto.
-
-    El primer `then()` devuelve otra promesa con otra llamada a `someAPI.getData()`, que permite encadenar otra función `then()` que maneja el segundo valor resuelto, registrándolo en la consola.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>¿Cómo utilizar una función con <code>async</code> y <code>await</code>?</summary>
 
-  <br>
+Una función asincrónica se crea utilizando la palabra clave `async` antes de la definición de la función.
 
-    Una función asincrónica se crea utilizando la palabra clave `async` antes de la definición de la función.
+Una función `async` te permite usar la palabra clave `await` dentro del cuerpo de la función para esperar a que se resuelva una promesa.
 
-    Una función `async` te permite usar la palabra clave `await` dentro del cuerpo de la función para esperar a que se resuelva una promesa.
+Cuando usamos una función `async` para manejar código asíncrono (por ejemplo, una llamada a la API) que potencialmente puede generar un error, tenemos que agregar un bloque `try`/`catch` para poder manejar cualquier error potencial.
 
-    Cuando usamos una función `async` para manejar código asíncrono (por ejemplo, una llamada a la API) que potencialmente puede generar un error, tenemos que agregar un bloque `try`/`catch` para poder manejar cualquier error potencial.
+##### Syntax
 
-    ##### Syntax
-
-    ```js
-    async function doSomething() {
-        try {
-        // Code that will be executed asynchronously
-        // that might throw an error
-        }
-        catch (error) {
-        // Handle the error
-        }
-    }
-    ```
-
-  <br>
-
-  ##### Utilizando `await` dentro de una función `async`
-
-  Aquí hay un ejemplo del uso de `await` dentro de una función `async` para esperar a que se resuelva una promesa:
-
-  ```js
-  async function getData() {
+```js
+async function doSomething() {
     try {
-      let response = await fetch('https://api.github.com/search/repositories?q=js');
-      let data = await response.json();
-      console.log(data);
+    // Code that will be executed asynchronously
+    // that might throw an error
     }
     catch (error) {
-      // error handling
-    } 
-  }
-  ```
-
-    En el ejemplo anterior, el primer `await` se usa para esperar a que se resuelva la promesa devuelta por `fetch()`. El valor de la promesa resuelta se asigna entonces a la variable `respuesta`.
-
-    El segundo `await` se usa para analizar la respuesta como un objeto json y se usa para esperar la promesa devuelta por `response.json()`. El valor resuelto se asigna luego a la variable `data`.
-
-    La función usa la palabra clave `return` para devolver los `datos` para permitir consumir el valor fuera de la función.
-
-  <br>
-
-  ##### Una función `async` siempre devuelve una Promise
-
-    La diferencia entre una *función regular* y una función `async` es que la función **`async` siempre devuelve una Promesa**.
-
-    Una vez definida, puede invocar una función `async` como una función normal y **manejar la Promesa que devuelve usando `.then()` y `.catch()` o `await`**.
-
-  <br>
-
-  Aquí hay un ejemplo del uso de `then` y `catch` para manejar una Promesa devuelta por una función `async`:
-
-  ```js
-  async function greeting() {
-    // An `async` function always returns a promise
-    // This value will be returned as a Promise
-    return "HELLO IRONHACKERS!";
-  }
-
-  greeting()
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    })
-  ```
-
-  <br>
-
-  Aquí hay un ejemplo del manejo de la misma función `async` pero esta vez usando `await`:
-
-  ```js
-  async function greeting() {
-    // Async function always returns a promise
-    // This value will be returned as a Promise
-    return "HELLO WORLD!";
-  }
-
-  // We need another wrapper `async` function so that we can use `await`
-  async function wrapperFunction() {
-    try {
-      const result = await greeting()
-      console.log(result);
+    // Handle the error
     }
-    catch (error) {
-      console.log("Error:", error);
-    }
-  }
-  ```
+}
+```
 
-  Ten en cuenta que necesitábamos otra función contenedora `async` para poder usar `await`.
+##### Utilizando `await` dentro de una función `async`
 
-  <br>
+Aquí hay un ejemplo del uso de `await` dentro de una función `async` para esperar a que se resuelva una promesa:
 
-  [Volver arriba](#faqs)
+```js
+async function getData() {
+try {
+    let response = await fetch('https://api.github.com/search/repositories?q=js');
+    let data = await response.json();
+    console.log(data);
+}
+catch (error) {
+    // error handling
+} 
+}
+```
+
+En el ejemplo anterior, el primer `await` se usa para esperar a que se resuelva la promesa devuelta por `fetch()`. El valor de la promesa resuelta se asigna entonces a la variable `respuesta`.
+
+El segundo `await` se usa para analizar la respuesta como un objeto json y se usa para esperar la promesa devuelta por `response.json()`. El valor resuelto se asigna luego a la variable `data`.
+
+La función usa la palabra clave `return` para devolver los `datos` para permitir consumir el valor fuera de la función.
+
+##### Una función `async` siempre devuelve una Promise
+
+La diferencia entre una *función regular* y una función `async` es que la función **`async` siempre devuelve una Promesa**.
+
+Una vez definida, puede invocar una función `async` como una función normal y **manejar la Promesa que devuelve usando `.then()` y `.catch()` o `await`**.
+
+Aquí hay un ejemplo del uso de `then` y `catch` para manejar una Promesa devuelta por una función `async`:
+
+```js
+async function greeting() {
+// An `async` function always returns a promise
+// This value will be returned as a Promise
+return "HELLO IRONHACKERS!";
+}
+
+greeting()
+.then((result) => {
+    console.log(result);
+})
+.catch((error) => {
+    console.log("Error:", error);
+})
+```
+
+Aquí hay un ejemplo del manejo de la misma función `async` pero esta vez usando `await`:
+
+```js
+async function greeting() {
+// Async function always returns a promise
+// This value will be returned as a Promise
+return "HELLO WORLD!";
+}
+
+// We need another wrapper `async` function so that we can use `await`
+async function wrapperFunction() {
+try {
+    const result = await greeting()
+    console.log(result);
+}
+catch (error) {
+    console.log("Error:", error);
+}
+}
+```
+
+Ten en cuenta que necesitábamos otra función contenedora `async` para poder usar `await`.
+
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>¿Cómo utilizar un bloque <code>try</code> / <code>catch</code>?</summary>
 
-  <br>
+El bloque `try`/`catch` se usa para manejar los errores que ocurren durante la ejecución de un programa.
 
-  El bloque `try`/`catch` se usa para manejar los errores que ocurren durante la ejecución de un programa.
+El bloque `try` contiene el código que podría arrojar un error, y el bloque `catch` contiene el código que manejará el error.
 
-   El bloque `try` contiene el código que podría arrojar un error, y el bloque `catch` contiene el código que manejará el error.
+Aquí hay un ejemplo del uso de un bloque `try`/`catch`:
 
-   Aquí hay un ejemplo del uso de un bloque `try`/`catch`:
+```js
+try {
+// Code that might throw an error
+} catch (error) {
+// Handle the error
+}
+```
 
-  ```js
-  try {
+El bloque `try`/`catch` se usa típicamente en funciones `asincrónicas` cuando se maneja código asíncrono que potencialmente puede arrojar un error.
+
+Aquí hay un ejemplo del uso de un bloque `try`/`catch` en una función `async` al manejar una promesa:
+
+```js
+async function doSomething() {
+
+try {
     // Code that might throw an error
-  } catch (error) {
+    const result = await someAsyncFunction();
+}
+catch (error) {
     // Handle the error
-  }
-  ```
+    console.error(error);
+}
 
-  El bloque `try`/`catch` se usa típicamente en funciones `asincrónicas` cuando se maneja código asíncrono que potencialmente puede arrojar un error.
+}
+```
 
-   Aquí hay un ejemplo del uso de un bloque `try`/`catch` en una función `async` al manejar una promesa:
+En el ejemplo anterior, el bloque `try` contiene una operación asíncrona que podría arrojar un error: `await someAsyncFunction()`. Si se arroja un error, la ejecución saltará automáticamente al bloque `catch`.
 
-  ```js
-  async function doSomething() {
-
-    try {
-      // Code that might throw an error
-      const result = await someAsyncFunction();
-    }
-    catch (error) {
-      // Handle the error
-      console.error(error);
-    }
-    
-  }
-  ```
-
-  En el ejemplo anterior, el bloque `try` contiene una operación asíncrona que podría arrojar un error: `await someAsyncFunction()`. Si se arroja un error, la ejecución saltará automáticamente al bloque `catch`.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Recibí el error: "Cannot find module" Node.js". ¿Cómo puedo resolverlo?</summary>
 
-  <br>
+El error "Cannot find module" en una aplicación de Node.js significa que el módulo que intenta importar o usar no existe en su proyecto o Node.js no puede encontrarlo.
 
-  El error "Cannot find module" en una aplicación de Node.js significa que el módulo que intenta importar o usar no existe en su proyecto o Node.js no puede encontrarlo.
+Hay algunas cosas que puedes intentar para resolver el problema:
 
-   Hay algunas cosas que puedes intentar para resolver el problema:
+1. **Las dependencias no están instaladas**: asegúrate de que todas las dependencias estén instaladas.
+Para hacer esto, ejecuta el comando `npm install` en la carpeta raíz de su proyecto.
+Esto instalará todas las dependencias enumeradas en el archivo `package.json` del proyecto y garantizará que todos los módulos que requiere su aplicación Node'js estén disponibles.
+2. **El módulo no está instalado**: asegúrate de que el *paquete* que está tratando de usar esté incluido en el `paquete.json` del proyecto y que esté instalado.
+Para hacer esto, ejecuta el comando `npm install <package_name>`, reemplazando `<package_name>` con el nombre del paquete.
+Esto agregará el paquete a la lista de dependencias en el archivo `package.json` y lo instalará en el proyecto.
+3. **El módulo no está importado:** Asegúrate de haber importado el módulo/paquete correctamente y de que la instrucción `require` esté escrita correctamente y disponible en el lugar correcto en su código.
+4. **Ruta de archivo incorrecta:** Si está importando otro archivo como un módulo, asegúrate de que el archivo que está tratando de solicitar esté ubicado en la carpeta correcta y que estés utilizando la ruta de archivo correcta.
+5. **Nombre de módulo/paquete incorrecto:** Verifica la ortografía del nombre del paquete que estás tratando de importar.
 
-   1. **Las dependencias no están instaladas**: asegúrate de que todas las dependencias estén instaladas.
-    Para hacer esto, ejecuta el comando `npm install` en la carpeta raíz de su proyecto.
-    Esto instalará todas las dependencias enumeradas en el archivo `package.json` del proyecto y garantizará que todos los módulos que requiere su aplicación Node'js estén disponibles.
-   2. **El módulo no está instalado**: asegúrate de que el *paquete* que está tratando de usar esté incluido en el `paquete.json` del proyecto y que esté instalado.
-    Para hacer esto, ejecuta el comando `npm install <package_name>`, reemplazando `<package_name>` con el nombre del paquete.
-    Esto agregará el paquete a la lista de dependencias en el archivo `package.json` y lo instalará en el proyecto.
-   3. **El módulo no está importado:** Asegúrate de haber importado el módulo/paquete correctamente y de que la instrucción `require` esté escrita correctamente y disponible en el lugar correcto en su código.
-   4. **Ruta de archivo incorrecta:** Si está importando otro archivo como un módulo, asegúrate de que el archivo que está tratando de solicitar esté ubicado en la carpeta correcta y que estés utilizando la ruta de archivo correcta.
-   5. **Nombre de módulo/paquete incorrecto:** Verifica la ortografía del nombre del paquete que estás tratando de importar.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Recibí el error "Error: listen EADDRINUSE: Address already in use". ¿Cómo lo soluciono?</summary>
 
-  <br>
+Este error significa que el puerto lo toma otro proceso que todavía se está ejecutando en ese puerto.
+Para solucionar el problema, debe eliminar el proceso usando el puerto y luego ejecutar el comando nuevamente. Aquí está cómo hacerlo:
 
-  Este error significa que el puerto lo toma otro proceso que todavía se está ejecutando en ese puerto.
-   Para solucionar el problema, debe eliminar el proceso usando el puerto y luego ejecutar el comando nuevamente. Aquí está cómo hacerlo:
+#### En Mac/Linux
 
-  #### En Mac/Linux
+Para eliminar el proceso que se ejecuta en el puerto `3000`, ejecuta el siguiente comando en la terminal:
 
-  Para eliminar el proceso que se ejecuta en el puerto `3000`, ejecuta el siguiente comando en la terminal:
+```bash
+sudo kill -9 $(lsof -t -i:3000)
+```
 
-   ```bash
-   sudo kill -9 $(lsof -t -i:3000)
-   ```
+**Importante:** Reemplaza el puerto de ejemplo anterior *3000* con el número de puerto del proceso que estás tratando de eliminar.
 
-  **Importante:** Reemplaza el puerto de ejemplo anterior *3000* con el número de puerto del proceso que estás tratando de eliminar.
+#### En Windows
 
-  <br>
+##### 1. Usando el Administrador de tareas
 
-  #### En Windows
+Para eliminar el proceso en ejecución en Windows usando el Administrador de tareas, haz lo siguiente:
 
-  ##### 1. Usando el Administrador de tareas
+1. Abre el **Administrador de tareas** presionando: **<kbd>Ctrl</kbd>** + **<kbd>Shift</kbd>** + **<kbd>Esc</kbd>* *
+2. Busca el proceso de Nodo que deseas finalizar.
+3. Haz clic derecho y seleccione **Finalizar tarea**
 
-  Para eliminar el proceso en ejecución en Windows usando el Administrador de tareas, haz lo siguiente:
+##### 2. Usando el símbolo del sistema
 
-   1. Abre el **Administrador de tareas** presionando: **<kbd>Ctrl</kbd>** + **<kbd>Shift</kbd>** + **<kbd>Esc</kbd>* *
-   2. Busca el proceso de Nodo que deseas finalizar.
-   3. Haz clic derecho y seleccione **Finalizar tarea**
+Para eliminar el proceso en ejecución en Windows mediante el símbolo del sistema, haz lo siguiente:
 
-  <br>
+1. Abre el menú **Inicio** de Windows
+2. Busca **CMD** en la barra de búsqueda
+3. En los resultados de la búsqueda, haz clic derecho en **Símbolo del sistema** y selecciona **Ejecutar como administrador**. Esto abrirá la terminal del símbolo del sistema.
+4. En la terminal del símbolo del sistema, ejecuta el siguiente comando para encontrar el ID del proceso:
 
-  ##### 2. Usando el símbolo del sistema
+```bash
+netstat -ano|findstr "PID :3000"
+```
 
-  Para eliminar el proceso en ejecución en Windows mediante el símbolo del sistema, haz lo siguiente:
+> Si el proceso se está ejecutando en otro puerto, simplemente reemplaza `3000` con el número del puerto en el que se está ejecutando el proceso.
 
-   1. Abre el menú **Inicio** de Windows
-   2. Busca **CMD** en la barra de búsqueda
-   3. En los resultados de la búsqueda, haz clic derecho en **Símbolo del sistema** y selecciona **Ejecutar como administrador**. Esto abrirá la terminal del símbolo del sistema.
-   4. En la terminal del símbolo del sistema, ejecuta el siguiente comando para encontrar el ID del proceso:
+Esto devolverá la identificación del proceso (PID). Luego debes ejecutar el siguiente comando usando la identificación del proceso (PID) que obtuviste en el paso anterior para finalizar el proceso:
 
-   ```bash
-   netstat -ano|findstr "PID :3000"
-   ```
+```bash
+taskkill /PID 12345 /f
+```
 
-   > Si el proceso se está ejecutando en otro puerto, simplemente reemplaza `3000` con el número del puerto en el que se está ejecutando el proceso.
+**Importante:** Reemplaza el PID de ejemplo anterior *12345*, con el ID de proceso (PID) que obtuviste en el paso anterior.
 
-    Esto devolverá la identificación del proceso (PID). Luego debes ejecutar el siguiente comando usando la identificación del proceso (PID) que obtuviste en el paso anterior para finalizar el proceso:
-
-   ```bash
-   taskkill /PID 12345 /f
-   ```
-
-   **Importante:** Reemplaza el PID de ejemplo anterior *12345*, con el ID de proceso (PID) que obtuviste en el paso anterior.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Recibí el error "Port is already in use". ¿Cómo lo soluciono?</summary>
 
-  <br>
+Este error significa que el puerto lo toma otro proceso que todavía se está ejecutando en ese puerto.
+Para solucionar el problema, debes eliminar el proceso usando el puerto y luego ejecutar el comando nuevamente. Aquí te explicamos cómo hacerlo:
 
-  Este error significa que el puerto lo toma otro proceso que todavía se está ejecutando en ese puerto.
-   Para solucionar el problema, debes eliminar el proceso usando el puerto y luego ejecutar el comando nuevamente. Aquí te explicamos cómo hacerlo:
+#### En Mac/Linux
 
-  #### En Mac/Linux
+Para eliminar el proceso que se ejecuta en el puerto `3000`, ejecuta el siguiente comando en la terminal:
 
-  Para eliminar el proceso que se ejecuta en el puerto `3000`, ejecuta el siguiente comando en la terminal:
+```bash
+sudo kill -9 $(lsof -t -i:3000)   
+```
 
-  ```bash
-  sudo kill -9 $(lsof -t -i:3000)   
-  ```
+**Importante:** Reemplaza el puerto de ejemplo anterior *3000* con el número de puerto del proceso que estás tratando de eliminar.
 
-  **Importante:** Reemplaza el puerto de ejemplo anterior *3000* con el número de puerto del proceso que estás tratando de eliminar.
+#### En Windows
 
-  <br>
+##### 1. Usando el Administrador de tareas
 
-  #### En Windows
+Para eliminar el proceso en ejecución en Windows usando el Administrador de tareas, haz lo siguiente:
 
-  ##### 1. Usando el Administrador de tareas
+1. Abre el **Administrador de tareas** presionando: **<kbd>Ctrl</kbd>** + **<kbd>Shift</kbd>** + **<kbd>Esc</kbd>* *
+2. Busca el proceso de Nodo que desea finalizar.
+3. Haz clic derecho y seleccione **Finalizar tarea**
 
-  Para eliminar el proceso en ejecución en Windows usando el Administrador de tareas, haz lo siguiente:
+##### 2. Usando el símbolo del sistema
 
-   1. Abre el **Administrador de tareas** presionando: **<kbd>Ctrl</kbd>** + **<kbd>Shift</kbd>** + **<kbd>Esc</kbd>* *
-   2. Busca el proceso de Nodo que desea finalizar.
-   3. Haz clic derecho y seleccione **Finalizar tarea**
+Para eliminar el proceso en ejecución en Windows mediante el símbolo del sistema, haz lo siguiente:
 
-  <br>
+1. Abre el menú **Inicio** de Windows
+2. Busca **CMD** en la barra de búsqueda
+3. En los resultados de la búsqueda, haz clic derecho en **Símbolo del sistema** y selecciona **Ejecutar como administrador**. Esto abrirá la terminal del símbolo del sistema.
+4. En la terminal del símbolo del sistema, ejecuta el siguiente comando para encontrar el ID del proceso:
 
-  ##### 2. Usando el símbolo del sistema
+```bash
+netstat -ano|findstr "PID :3000"
+```
 
-  Para eliminar el proceso en ejecución en Windows mediante el símbolo del sistema, haz lo siguiente:
+> Si el proceso se está ejecutando en otro puerto, simplemente reemplaza `3000` con el número del puerto en el que se está ejecutando el proceso.
 
-   1. Abre el menú **Inicio** de Windows
-   2. Busca **CMD** en la barra de búsqueda
-   3. En los resultados de la búsqueda, haz clic derecho en **Símbolo del sistema** y selecciona **Ejecutar como administrador**. Esto abrirá la terminal del símbolo del sistema.
-   4. En la terminal del símbolo del sistema, ejecuta el siguiente comando para encontrar el ID del proceso:
+Esto devolverá la identificación del proceso (PID). Luego debes ejecutar el siguiente comando usando la identificación del proceso (PID) que obtuviste en el paso anterior para finalizar el proceso:
 
-   ```bash
-   netstat -ano|findstr "PID :3000"
-   ```
+```bash
+taskkill /PID 12345 /f
+```
 
-   > Si el proceso se está ejecutando en otro puerto, simplemente reemplaza `3000` con el número del puerto en el que se está ejecutando el proceso.
+**Importante:** Reemplaza el PID de ejemplo anterior *12345*, con el ID de proceso (PID) que obtuviste en el paso anterior.
 
-    Esto devolverá la identificación del proceso (PID). Luego debes ejecutar el siguiente comando usando la identificación del proceso (PID) que obtuviste en el paso anterior para finalizar el proceso:
-
-   ```bash
-   taskkill /PID 12345 /f
-   ```
-
-  **Importante:** Reemplaza el PID de ejemplo anterior *12345*, con el ID de proceso (PID) que obtuviste en el paso anterior.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Recibí el error: "Error: connect ECONNREFUSED ::1:27017". ¿Qué tengo que hacer?</summary>
 
-  <br>
+Este error significa que la aplicación Node.js no puede conectarse a una instancia de MongoDB que se ejecuta en la (misma) máquina local.
+Hay algunas cosas que debes tener en cuenta para solucionar este problema:
 
-  Este error significa que la aplicación Node.js no puede conectarse a una instancia de MongoDB que se ejecuta en la (misma) máquina local.
-   Hay algunas cosas que debes tener en cuenta para solucionar este problema:
+1. **Verifica la cadena de conexión de la base de datos**: Verifica que la cadena de conexión sea correcta. La cadena de conexión de la base de datos debe tener el formato:
 
-   1. **Verifica la cadena de conexión de la base de datos**: Verifica que la cadena de conexión sea correcta. La cadena de conexión de la base de datos debe tener el formato:
+```python
+mongodb://127.0.0.1:27017/databaseName
+```
 
-   ```python
-   mongodb://127.0.0.1:27017/databaseName
-   ```
+2. **Verifica que MongoDB se esté ejecutando en su máquina**: Verifica que MongoDB se está ejecutando en tu máquina. Si no se está ejecutando, reinicia el servicio de acuerdo con las siguientes instrucciones:
 
-  2. **Verifica que MongoDB se esté ejecutando en su máquina**: Verifica que MongoDB se está ejecutando en tu máquina. Si no se está ejecutando, reinicia el servicio de acuerdo con las siguientes instrucciones:
+**En Mac:**
 
-    **En Mac:**
+Comprueba si MongoDB se está ejecutando en su máquina ejecutando el comando:
 
-    Comprueba si MongoDB se está ejecutando en su máquina ejecutando el comando:
+```bash
+brew services list
+```
 
-   ```bash
-   brew services list
-   ```
+Deberías ver el servicio 'mongodb-community' listado como 'iniciado'. De lo contrario, ejecuta el siguiente comando para iniciarlo:
 
-   Deberías ver el servicio 'mongodb-community' listado como 'iniciado'. De lo contrario, ejecuta el siguiente comando para iniciarlo:
+```bash
+brew services start mongodb-community
+```
 
-   ```bash
-   brew services start mongodb-community
-   ```
+**En Ubuntu:**
+Puedes iniciar el proceso [`mongod`](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod) escribiendo el siguiente comando:
 
-   <br>
+```bash
+sudo systemctl start mongod
+```
 
-   **En Ubuntu:**
-    Puedes iniciar el proceso [`mongod`](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod) escribiendo el siguiente comando:
+Si recibes un error similar al siguiente al iniciar [`mongod`:](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod)
 
-   ```bash
-   sudo systemctl start mongod
-   ```
+> ```
+> Failed to start mongod.service: Unit mongod.service not found.
+> ```
 
-   Si recibes un error similar al siguiente al iniciar [`mongod`:](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod)
+Ejecute primero el siguiente comando:
 
-   > ```
-   > Failed to start mongod.service: Unit mongod.service not found.
-   > ```
+```bash
+sudo systemctl daemon-reload
+```
 
-   Ejecute primero el siguiente comando:
+Luego ejecute el comando de inicio anterior nuevamente.
 
-   ```bash
-   sudo systemctl daemon-reload
-   ```
+**En Windows:**
 
-   Luego ejecute el comando de inicio anterior nuevamente.
+Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
 
-   <br>
+- Ve a tus *Archivos de programa* en tu unidad *C:* - el disco local
+- En *Archivos de programa* ve a la carpeta *MongoDB*
+- Dentro de la carpeta *MongoDB*, sigue esta ruta `Server/4.4/bin`. El número de versión de su sistema (`4.4`) puede ser ligeramente diferente para las instalaciones más nuevas.
+- Haz doble clic en el archivo llamado **mongod.exe**.
+
+    <details style="font-size: 14px; cursor: pointer; outline: none;">
+    <summary> Check the image inside </summary>
+
+    ![](https://education-team-2020.s3.eu-west-1.amazonaws.com/web-dev/prework/installations/win-installations-bootcamp-mongo-03.png)
+
+    </details>
    
-   **En Windows:**
-
-    Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
-
-    - Ve a tus *Archivos de programa* en tu unidad *C:* - el disco local
-    - En *Archivos de programa* ve a la carpeta *MongoDB*
-    - Dentro de la carpeta *MongoDB*, sigue esta ruta `Server/4.4/bin`. El número de versión de su sistema (`4.4`) puede ser ligeramente diferente para las instalaciones más nuevas.
-    - Haz doble clic en el archivo llamado **mongod.exe**.
-
-     <details style="font-size: 14px; cursor: pointer; outline: none;">
-      <summary> Check the image inside </summary>
-
-     <br>
-    
-     ![](https://education-team-2020.s3.eu-west-1.amazonaws.com/web-dev/prework/installations/win-installations-bootcamp-mongo-03.png)
-    
-     </details>
-   
-   <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>¿Por qué mi base de datos está vacía aunque puedo conectarme?</summary>
 
-  <br>
+Es normal que la base de datos esté vacía si no ha insertado ningún dato en ella. Si desea confirmar que su conexión a la base de datos funciona correctamente, puede intentar insertar un documento simple en una colección y luego consultar la colección o verificar la base de datos para ver si se agregó el documento.
 
-  Es normal que la base de datos esté vacía si no ha insertado ningún dato en ella. Si desea confirmar que su conexión a la base de datos funciona correctamente, puede intentar insertar un documento simple en una colección y luego consultar la colección o verificar la base de datos para ver si se agregó el documento.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Recibo el error "MongoDB no se está ejecutando en el host y el puerto proporcionados" cuando intento conectarme con MongoDB Compass. ¿Qué tengo que hacer?</summary>
 
-  <br>
+Si estás intentando conectarse a una instancia de MongoDB que se ejecuta localmente, primero debes verificar que MongoDB se esté ejecutando en su máquina. Si no se está ejecutando, reinicia el servicio de acuerdo con las siguientes instrucciones:
 
-  Si estás intentando conectarse a una instancia de MongoDB que se ejecuta localmente, primero debes verificar que MongoDB se esté ejecutando en su máquina. Si no se está ejecutando, reinicia el servicio de acuerdo con las siguientes instrucciones:
+**En Mac:**
 
-    **En Mac:**
+Comprueba si MongoDB se está ejecutando en su máquina ejecutando el comando:
 
-   Comprueba si MongoDB se está ejecutando en su máquina ejecutando el comando:
+```bash
+brew services list
+```
 
-  ```bash
-  brew services list
-  ```
+Deberías ver el servicio 'mongodb-community' listado como 'iniciado'. De lo contrario, ejecute el siguiente comando para iniciarlo:
 
-  Deberías ver el servicio 'mongodb-community' listado como 'iniciado'. De lo contrario, ejecute el siguiente comando para iniciarlo:
+```bash
+brew services start mongodb-community
+```
 
-  ```bash
-  brew services start mongodb-community
-  ```
+**En Ubuntu:**
 
-   <br>
+Puedes iniciar el proceso [`mongod`](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod) escribiendo el siguiente comando:
 
-  **En Ubuntu:**
-  
-   Puedes iniciar el proceso [`mongod`](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod) escribiendo el siguiente comando:
+```bash
+sudo systemctl start mongod
+```
 
-  ```bash
-  sudo systemctl start mongod
-  ```
+Si recibes un error similar al siguiente al iniciar [`mongod`:](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod)
 
-  Si recibes un error similar al siguiente al iniciar [`mongod`:](https://www.mongodb.com/docs/manual/reference/program/mongod/#mongodb-binary-bin.mongod)
+> ```
+> Failed to start mongod.service: Unit mongod.service not found.
+> ```
 
-  > ```
-  > Failed to start mongod.service: Unit mongod.service not found.
-  > ```
+Ejecuta primero el siguiente comando:
 
-  Ejecuta primero el siguiente comando:
+```bash
+sudo systemctl daemon-reload
+```
 
-  ```bash
-  sudo systemctl daemon-reload
-  ```
+Luego ejecuta el comando de inicio anterior nuevamente.
 
-  Luego ejecuta el comando de inicio anterior nuevamente.
+**En Windows:**
 
+Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
 
-   <br>
-   
-   **En Windows:**
+- Ve a tus *Archivos de programa* en tu unidad *C:* - el disco local
+- En *Archivos de programa* ve a la carpeta *MongoDB*
+- Dentro de la carpeta *MongoDB*, sigue esta ruta `Server/4.4/bin`. El número de versión de su sistema (`4.4`) puede ser ligeramente diferente para las instalaciones más nuevas.
+- Haz doble clic en el archivo llamado **mongod.exe**.
 
-    Para abrir el proceso *MongoDB* en Windows, deberás seguir estos pasos:
+    <details style="font-size: 14px; cursor: pointer; outline: none;">
+    <summary> Check the image inside </summary>
 
-    - Ve a tus *Archivos de programa* en tu unidad *C:* - el disco local
-    - En *Archivos de programa* ve a la carpeta *MongoDB*
-    - Dentro de la carpeta *MongoDB*, sigue esta ruta `Server/4.4/bin`. El número de versión de su sistema (`4.4`) puede ser ligeramente diferente para las instalaciones más nuevas.
-    - Haz doble clic en el archivo llamado **mongod.exe**.
+    ![](https://education-team-2020.s3.eu-west-1.amazonaws.com/web-dev/prework/installations/win-installations-bootcamp-mongo-03.png)
 
-     <details style="font-size: 14px; cursor: pointer; outline: none;">
-      <summary> Check the image inside </summary>
+    </details>
 
-     <br>
-    
-     ![](https://education-team-2020.s3.eu-west-1.amazonaws.com/web-dev/prework/installations/win-installations-bootcamp-mongo-03.png)
-    
-     </details>
-
-   <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
-  <summary>¿Cómo crear un modelo de Mongoose?</summary>
-
-  <br>
+<summary>¿Cómo crear un modelo de Mongoose?</summary>
 
 El modelo Mongoose sirve como modelo para crear y administrar documentos dentro de las colecciones de MongoDB. El modelo de Mongoose es una superposición sobre una colección de MongoDB, que usamos para consultar e interactuar con esa colección de base de datos.
 
 Aquí hay un ejemplo de cómo crear un modelo de `Usuario` para administrar documentos en la colección de `usuarios`:
 
-  ```js
-  // IMPORT MONGOOSE
-  const mongoose = require("mongoose");
+```js
+// IMPORT MONGOOSE
+const mongoose = require("mongoose");
 
-  // CREATE A SCHEMA - defines the shape of the documents
-  const userSchema = new mongoose.Schema({ 
-    firstName: String,
-    lastName: String 
-  });
+// CREATE A SCHEMA - defines the shape of the documents
+const userSchema = new mongoose.Schema({ 
+firstName: String,
+lastName: String 
+});
 
-  // CREATE THE MODEL
-  const User = mongoose.model("User", schema);
+// CREATE THE MODEL
+const User = mongoose.model("User", schema);
 
-  // EXPORT THE MODEL
-  module.exports = User;
-  ```
+// EXPORT THE MODEL
+module.exports = User;
+```
 
-  <br>
-
-  En el ejemplo anterior, creamos y exportamos un modelo de 'Usuario', para que pueda importarse y usarse en cualquier parte de la aplicación para administrar la colección de 'usuarios' de la base de datos.
+En el ejemplo anterior, creamos y exportamos un modelo de 'Usuario', para que pueda importarse y usarse en cualquier parte de la aplicación para administrar la colección de 'usuarios' de la base de datos.
 
 Analicemos el ejemplo anterior y los pasos para crear un modelo de mangosta:
 
 1. **Importar Mongoose:** El primer paso es importar la biblioteca `mongoose`.
 2. **Crear un esquema:** El siguiente paso es crear un esquema, que define la forma de los documentos que se almacenarán en la colección `users`. En el ejemplo anterior, el esquema tiene dos campos `firstName` y `lastName` que son cadenas.
 3. **Crear el modelo**: El último paso es crear el modelo. Esto se hace usando el método `mongoose.model()` , que toma dos argumentos: el nombre del modelo, en este caso `'Usuario'` y el esquema que debería usar.
-    Mongoose automáticamente pluraliza y convierte a minúsculas el nombre del modelo provisto y lo usa como el nombre de la colección. En este caso, la cadena `'Usuario'` se convierte automáticamente en un nombre de colección -> `usuarios`.
+Mongoose automáticamente pluraliza y convierte a minúsculas el nombre del modelo provisto y lo usa como el nombre de la colección. En este caso, la cadena `'Usuario'` se convierte automáticamente en un nombre de colección -> `usuarios`.
 4. **Exportar el modelo:** Después de crear el modelo, debe exportarse para poder usarlo en otras partes de la aplicación.
 
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>¿Cómo resuelvo el error de Mongoose "ValidationError: Path ... is required."?</summary>
 
-  <br>
+Este error ocurre cuando intenta guardar un documento en la base de datos sin un valor para un campo que está marcado como obligatorio en el modelo.
 
-  Este error ocurre cuando intenta guardar un documento en la base de datos sin un valor para un campo que está marcado como obligatorio en el modelo.
+Para corregir este error, asegúrate de proporcionar un valor para todos los campos obligatorios al crear o actualizar un documento. Puedes verificar que está proporcionando los valores correctos utilizando console.log para inspeccionar los datos antes de guardarlos en la base de datos.
 
-    Para corregir este error, asegúrate de proporcionar un valor para todos los campos obligatorios al crear o actualizar un documento. Puedes verificar que está proporcionando los valores correctos utilizando console.log para inspeccionar los datos antes de guardarlos en la base de datos.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Recibo un error: "not defined". ¿Cómo lo soluciono?</summary>
 
-  <br>
 
-  El error "ReferenceError: la variable no está definida" en JavaScript ocurre cuando intenta acceder a una variable o una función que aún no se ha definido o está fuera del alcance.
-   Para solucionar el problema, verifique que haya definido la variable o función que está tratando de usar y vuelva a verificar la ortografía para asegurarse de que está usando el nombre correcto.
-   En caso de que la variable o una función esté definida en otro archivo, asegúrese de que el archivo se haya importado o cargado correctamente.
+El error "ReferenceError: la variable no está definida" en JavaScript ocurre cuando intenta acceder a una variable o una función que aún no se ha definido o está fuera del alcance.
+Para solucionar el problema, verifique que haya definido la variable o función que está tratando de usar y vuelva a verificar la ortografía para asegurarse de que está usando el nombre correcto.
+En caso de que la variable o una función esté definida en otro archivo, asegúrese de que el archivo se haya importado o cargado correctamente.
 
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>Cuando intento ejecutar la aplicación, aparece el error "command not found: nodemon"</summary>
 
-  <br>
+Asegúrate de tener `nodemon` instalado globalmente:
 
-  Asegúrate de tener `nodemon` instalado globalmente:
-  
 
-  ```bash
-  npm install -g nodemon
-  ```
+```bash
+npm install -g nodemon
+```
 
-  Esto instalará nodemon globalmente en su sistema, haciéndolo disponible para todos sus proyectos.
+Esto instalará nodemon globalmente en su sistema, haciéndolo disponible para todos sus proyectos.
 
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
 
 <details>
   <summary>No puedo hacer push al repositorio. ¿Qué tengo que hacer?</summary>
 
-  <br>
+Hay un par de razones posibles por las que es posible que no puedas hacer *push* a un repositorio de Git:
 
-  Hay un par de razones posibles por las que es posible que no puedas hacer *push* a un repositorio de Git:
+1. **No has confirmado sus cambios:** Antes de que pueda enviar sus cambios al repositorio, debes confirmarlos con el comando `git commit`. Asegúrate de haber confirmado sus cambios e intente presionar nuevamente. Para hacer esto, ejecuta los siguientes comandos de terminal desde la carpeta del proyecto:
 
-    1. **No has confirmado sus cambios:** Antes de que pueda enviar sus cambios al repositorio, debes confirmarlos con el comando `git commit`. Asegúrate de haber confirmado sus cambios e intente presionar nuevamente. Para hacer esto, ejecuta los siguientes comandos de terminal desde la carpeta del proyecto:
+```bash
+git add .
+git commit -m "Your commit message"
+git push
+```
 
-   ```bash
-   git add .
-   git commit -m "Your commit message"
-   git push
-   ```
+2. **No tienes permiso para subir al repositorio:** Si has clonado el repositorio directamente desde el repositorio principal de Ironhack sin hacer un *Fork* primero, no tienes acceso de escritura al repositorio.
+Para verificar qué repositorio remoto ha clonado, ejecuta el siguiente comando de terminal desde la carpeta del proyecto:
 
-   2. **No tienes permiso para subir al repositorio:** Si has clonado el repositorio directamente desde el repositorio principal de Ironhack sin hacer un *Fork* primero, no tienes acceso de escritura al repositorio.
-    Para verificar qué repositorio remoto ha clonado, ejecuta el siguiente comando de terminal desde la carpeta del proyecto:
+```bash
+git remote -v
+```
 
-   ```bash
-   git remote -v
-   ```
+Si el enlace que se muestra es el mismo que el del repositorio principal, primero deberás bifurcar hacer un fork en tu cuenta de GitHub y luego clonar tu fork en tu máquina local para poder aplicar los cambios.
 
-  Si el enlace que se muestra es el mismo que el del repositorio principal, primero deberás bifurcar hacer un fork en tu cuenta de GitHub y luego clonar tu fork en tu máquina local para poder aplicar los cambios.
-
-  <br>
-
-  [Volver arriba](#faqs)
+[Volver arriba](#faqs)
 
 </details>
