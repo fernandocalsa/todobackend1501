@@ -27,7 +27,7 @@ require('dotenv').config();
 `app.js`
 ```js
 const mongoose = require("mongoose");
-const mongoDB = "mongodb+srv://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@nautes.vq3epru.mongodb.net/"+process.env.DB_NAME+"?retryWrites=true&w=majority";
+const mongoDB = "mongodb+srv://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_SERVER+"/"+process.env.DB_NAME+"?retryWrites=true&w=majority";
 async function main() {
   await mongoose.connect(mongoDB);
 }
@@ -74,7 +74,7 @@ const studentSchema = new Schema({
 // Student is our mongoose model class
 // all students in students collection will share these properties
 // Mongoose turns models name to a collection name (Student --> students)
-module.exports = mongoose.module("Student", catSchema);
+module.exports = mongoose.model("Student", studentSchema);
 ```
 
 ### Iteración #2
@@ -93,7 +93,7 @@ Insertar varios alumnos a la vez
 
 ```js
 Student.create([
-    { first_name: 'Pepe', last_name: 'López', birthyear: 1978 }
+    { first_name: 'Pepe', last_name: 'López', birthyear: 1978 },
     { first_name: 'Marta', last_name: 'Fernández', birthyear: 1982 }
 ])
   .then(studentDocs => console.log(`Multiple students created: ${studentDocs}`))
@@ -106,7 +106,7 @@ Student.create([
 Obtener la lista de alumnos
 
 ```js
-Student.find({ age: { $gt: 10 } })
+Student.find()
   .then(studentDocs => console.log('Found this: ', studentDocs))
   .catch(err => console.log('Error while getting the students: ', err));
 ```
@@ -115,7 +115,7 @@ Student.find({ age: { $gt: 10 } })
 Obtener la lista de alumnos filtrado por nacidos después de 1980
 
 ```js
-Student.find({ age: { $gt: 1980 } })
+Student.find({ birthyear: { $gt: 1980 } })
   .then(studentDocs => console.log('Found this 🐈: ', studentDocs))
   .catch(err => console.log('Error while getting the students: ', err));
 ```
@@ -182,6 +182,8 @@ Student.findOneAndUpdate(
   .then(updatedStudents => console.log('Updated students: ', updatedStudents))
   .catch(err => console.log('Error while updating the students: ', err));
 ```
+
+Si por alguna razón se desea reemplazar todos los datos, existe el método `findOneAndReplace`, que mantendrá la id.
 
 ### Iteración #11
 Eliminar un documento a partir de su Id
