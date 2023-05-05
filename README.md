@@ -76,7 +76,6 @@ const Schema = mongoose.Schema;
 // Schema defines the STRUCTURE of documents in the collection
 // this is the BLUEPRINT for all instances
 const studentSchema = new Schema({
-  // name: String,
   first_name: String,
   last_name: String,
   birthyear: Number,
@@ -224,11 +223,114 @@ Definir validación de datos en el modelo
 | last_name   | String      | Requerido. Min 2 carácteres     |
 | birthyear   | Number      | Requerido. Min: 1900. Max: 2020 |
 
+
+`models\student.model.js`
+
+```js
+const studentSchema = new Schema({
+  first_name: { 
+    type: String, 
+    required: true,
+    minLength: 2,
+    },
+  last_name: { 
+    type: String, 
+    required: true,
+    minLength: 2,
+    },
+  birthyear: { 
+    type: Number, 
+    required: true,
+    min: 1900,
+    max: 1900,
+    },
+});
+```
+
+
+Validaciones: https://mongoosejs.com/docs/validation.html
+
+- required: boolean or function, if true adds a required validator for this property
+- default: Any or function, sets a default value for the path. If the value is a function, the return value of the function is used as the default.
+- validate: function, adds a validator function for this property
+
+String
+
+- lowercase: boolean, whether to always call .toLowerCase() on the value
+- uppercase: boolean, whether to always call .toUpperCase() on the value
+- trim: boolean, whether to always call .trim() on the value
+- match: RegExp, creates a validator that checks if the value matches the given regular expression
+- enum: Array, creates a validator that checks if the value is in the given array.
+- minLength: Number, creates a validator that checks if the value length is not less than the given number
+- maxLength: Number, creates a validator that checks if the value length is not greater than the given number
+
+Number
+
+- min: Number, creates a validator that checks if the value is greater than or equal to the given minimum.
+- max: Number, creates a validator that checks if the value is less than or equal to the given maximum.
+- enum: Array, creates a validator that checks if the value is strictly equal to one of the values in the given array.
+
+Date
+
+- min: Date, creates a validator that checks if the value is greater than or equal to the given minimum.
+- max: Date, creates a validator that checks if the value is less than or equal to the given maximum.
+
 ### Iteración #14
 Cerrar conexión con base de datos
 
 ```js
 mongoose.connection.close()
+```
+
+### Iteración #15
+Asociar alumnos con un master
+
+Primero de todo necesitaremos crear un modelo para los masters
+
+| Field       | Type        |
+| ----------- | ----------- |
+| name        | String      |
+| year        | Number      |
+| description | String      |
+
+`models\master.model.js`
+
+```js
+const mongoose = require('mongoose');
+
+// here we are getting access to Schema class from mongoose
+const Schema = mongoose.Schema;
+
+// Schema defines the STRUCTURE of documents in the collection
+// this is the BLUEPRINT for all instances
+const masterSchema = new Schema({
+  name: String,
+  year: Number,
+  description: String,
+});
+
+// Student is our mongoose model class
+// all students in students collection will share these properties
+// Mongoose turns models name to a collection name (Student --> students)
+module.exports = mongoose.module("Master", masterSchema);
+```
+
+`models\student.model.js`
+
+```js
+...
+masterId: {type: mongoose.Schema.Types.ObjectId, ref: 'Master'},
+...
+```
+
+### Iteración #16
+Obtener lista alumnos con información del master
+
+```js
+Student.find()
+  .populate('regionId')
+  .then(studentDocs => console.log('Found this: ', studentDocs))
+  .catch(err => console.log('Error while getting the students: ', err));
 ```
 
 ## FAQs
