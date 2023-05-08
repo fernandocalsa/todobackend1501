@@ -1,5 +1,4 @@
-# Introducción a Mongoose
-Con este ejemplo trabajaremos la conexión de nuestro backend con mongoose. 
+# TODO Backend
 
 ## Instalación de mongoose
 ```shell
