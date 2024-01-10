@@ -1,11 +1,16 @@
 var express = require('express')
+const { verifyToken } = require('../controllers/userController')
 var router = express.Router()
 
 taskController = require('../controllers/taskController')
 
 router.get('/:taskId?', taskController.getTasks)
-router.post('/', taskController.addTask)
-router.delete('/:taskId', taskController.deleteTask)
-router.put('/:taskId', taskController.updateTask)
+
+router.post('/', verifyToken, taskController.addTask)
+
+router.delete('/:taskId', verifyToken, taskController.deleteTask)
+
+router.put('/:taskId', verifyToken, taskController.updateTask)
+
 
 module.exports = router

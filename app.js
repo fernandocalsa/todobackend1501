@@ -1,30 +1,43 @@
 //Load server
 const express = require('express')
-const app = express()
-const port = 8000
-
-//Load environment variables
+const app = express();
 require('dotenv').config();
 
+
+const port = process.env.PORT || 8000;
+
+const cors = require('cors');
+
+
+//Load environment variables
+
 app.use(express.json())
+app.use(cors())
 
 //Connect to database
 const mongoose = require("mongoose");
-const mongoDB = "mongodb+srv://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@"+process.env.DB_SERVER+"/"+process.env.DB_NAME+"?retryWrites=true&w=majority";
+const connectionStringToDB = `mongodb://localhost:27017/${process.env.DB_NAME}?retryWrites=true&w=majority` 
+
 async function main() {
-  await mongoose.connect(mongoDB);
+  return await mongoose.connect(connectionStringToDB);
 }
-main().catch(err => console.log(err));
+main()
+  .then(() => console.log('Estamos conectados a la DB'))
+  .catch(err => console.log(err));
+
 
 //Load routes
-const tasks = require('./routes/tasks')
-app.use('/tasks', tasks)
+const tasks = require('./routes/tasks');
+const routerUsers = require('./routes/users')
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use('/tasks', tasks)
+app.use('/users', routerUsers)
+
 
 //Start server
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+module.exports = app

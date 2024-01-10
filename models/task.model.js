@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 // Schema defines the STRUCTURE of documents in the collection
 // this is the BLUEPRINT for all instances
 const taskSchema = new Schema({
-    task: {
+    name: {
         type: String,
         required: true,
         unique: true
@@ -17,9 +17,9 @@ const taskSchema = new Schema({
         required: true,
         default: "PENDING",
         enum: ["COMPLETED", "IN PROGRESS", "PENDING", "POSTPONED", "DELETED"]
-        },
-    deletedAt: Date
     },
+    deletedAt: Date
+},
     { timestamps: true }
 );
 
