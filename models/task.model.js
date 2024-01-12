@@ -18,7 +18,11 @@ const taskSchema = new Schema({
         default: "PENDING",
         enum: ["COMPLETED", "IN PROGRESS", "PENDING", "POSTPONED", "DELETED"]
     },
-    deletedAt: Date
+    deletedAt: Date,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 },
     { timestamps: true }
 );

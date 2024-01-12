@@ -60,6 +60,7 @@ const addTask = (req, res) => {
         {
             name: req.body.name,
             dueDate: req.body.dueDate,
+            author: req.userId
         }
     ).then(taskDoc => res.status(200).send(taskDoc))
         .catch(error => {
