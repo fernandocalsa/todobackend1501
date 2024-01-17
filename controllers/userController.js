@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 
 const mySalt = 10;
-const mySecret = 'BANANASECRETO'
+const mySecret = process.env.JWT_SECRET
 
 const addUser = async (req, res) => {
     // encriptamos la password

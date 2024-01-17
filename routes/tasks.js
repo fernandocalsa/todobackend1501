@@ -4,7 +4,7 @@ var router = express.Router()
 
 taskController = require('../controllers/taskController')
 
-router.get('/:taskId?', taskController.getTasks)
+router.get('/:taskId?', verifyToken, taskController.getTasks)
 
 router.post('/', verifyToken, taskController.addTask)
 

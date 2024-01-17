@@ -5,11 +5,14 @@ const sumar = (a, b) => a + b;
 
 
 const getTasks = (req, res) => {
+
+    const userId = req.userId
+
     console.log('query', req?.query)
     if (req.params.taskId) {
         Task.findById(req.params.taskId)
             .then(taskDoc => {
-                if (taskDoc === null) {
+                if (taskDoc === null || taskDoc.author !== userId) {
                     res.status(404).send({ msg: "No se han encontrado tareas" })
                 } else {
                     res.status(200).send(taskDoc)
@@ -27,7 +30,9 @@ const getTasks = (req, res) => {
             })
     } else {
 
-        let filter = {}
+        let filter = {
+            author: userId
+        }
 
         if (req.query?.status) {
             filter.status = req.query.status
@@ -72,19 +77,18 @@ const addTask = (req, res) => {
         })
 }
 
-const deleteTask = (req, res) => {
-    Task.findOneAndUpdate(
+const deleteTask = async (req, res) => {
+    const userId = req.userId
+    const task = await Task.findById(req.params.taskId)
+    console.log(task, userId)
+
+    if (task.author !== userId) {
+        return res.status(403).json({ error: 'unathorized' })
+    }
+
+    Task.deleteOne(
         {
-            _id: req.params.taskId,
-            status: { $ne: "DELETED" }
-        }
-        ,
-        {
-            status: "DELETED",
-            deletedAt: new Date()
-        },
-        {
-            timestamps: false
+            _id: req.params.taskId
         }
     )
         .then(taskDoc => {

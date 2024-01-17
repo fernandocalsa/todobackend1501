@@ -16,7 +16,7 @@ app.use(cors())
 
 //Connect to database
 const mongoose = require("mongoose");
-const connectionStringToDB = `mongodb://localhost:27017/${process.env.DB_NAME}?retryWrites=true&w=majority` 
+const connectionStringToDB = process.env.MONGO_URI //`mongodb://127.0.0.1:27017/test?retryWrites=true&w=majority`
 
 async function main() {
   return await mongoose.connect(connectionStringToDB);
